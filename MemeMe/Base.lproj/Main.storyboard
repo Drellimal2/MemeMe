@@ -52,10 +52,10 @@
                                             <constraint firstItem="89Y-OO-ZZD" firstAttribute="centerX" secondItem="4YW-b8-gZW" secondAttribute="centerX" id="RIa-QK-P9X"/>
                                             <constraint firstAttribute="trailing" secondItem="4YW-b8-gZW" secondAttribute="trailing" id="gfi-qq-dTL"/>
                                             <constraint firstItem="89Y-OO-ZZD" firstAttribute="bottom" secondItem="4YW-b8-gZW" secondAttribute="bottom" constant="-8" id="lzC-LK-U9e"/>
-                                            <constraint firstItem="kj0-cL-CGf" firstAttribute="top" secondItem="4YW-b8-gZW" secondAttribute="top" constant="8" id="mqv-6H-Xqj"/>
                                             <constraint firstItem="4YW-b8-gZW" firstAttribute="centerY" secondItem="pMa-Bv-bbK" secondAttribute="centerY" id="msJ-IZ-30Q"/>
                                             <constraint firstItem="89Y-OO-ZZD" firstAttribute="width" secondItem="4YW-b8-gZW" secondAttribute="width" id="n0d-Xd-RaJ"/>
                                             <constraint firstItem="kj0-cL-CGf" firstAttribute="centerX" secondItem="4YW-b8-gZW" secondAttribute="centerX" id="nDB-yD-lCE"/>
+                                            <constraint firstItem="kj0-cL-CGf" firstAttribute="top" secondItem="4YW-b8-gZW" secondAttribute="top" constant="8" id="oLc-wH-kVr"/>
                                             <constraint firstItem="kj0-cL-CGf" firstAttribute="width" secondItem="4YW-b8-gZW" secondAttribute="width" id="pqe-Q0-FBZ"/>
                                         </constraints>
                                     </view>

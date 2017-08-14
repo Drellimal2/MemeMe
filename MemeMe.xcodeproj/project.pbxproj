@@ -13,6 +13,7 @@
 		352165E51F41677200394C34 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 352165E31F41677200394C34 /* LaunchScreen.storyboard */; };
 		352165ED1F416ABF00394C34 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352165EC1F416ABF00394C34 /* MainViewController.swift */; };
 		352165F01F416CD500394C34 /* MemeTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352165EF1F416CD500394C34 /* MemeTextFieldDelegate.swift */; };
+		352165F21F4177EF00394C34 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352165F11F4177EF00394C34 /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		352165E61F41677200394C34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		352165EC1F416ABF00394C34 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		352165EF1F416CD500394C34 /* MemeTextFieldDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemeTextFieldDelegate.swift; sourceTree = "<group>"; };
+		352165F11F4177EF00394C34 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				352165E31F41677200394C34 /* LaunchScreen.storyboard */,
 				352165E61F41677200394C34 /* Info.plist */,
 				352165EC1F416ABF00394C34 /* MainViewController.swift */,
+				352165F11F4177EF00394C34 /* Utils.swift */,
 			);
 			path = MemeMe;
 			sourceTree = "<group>";
@@ -151,6 +154,7 @@
 				352165ED1F416ABF00394C34 /* MainViewController.swift in Sources */,
 				352165F01F416CD500394C34 /* MemeTextFieldDelegate.swift in Sources */,
 				352165DB1F41677200394C34 /* AppDelegate.swift in Sources */,
+				352165F21F4177EF00394C34 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

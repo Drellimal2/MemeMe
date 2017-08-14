@@ -25,6 +25,23 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="EKf-B1-NrO">
                                 <rect key="frame" x="0.0" y="28" width="375" height="639"/>
                                 <subviews>
+                                    <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vh6-BF-Qj4">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
+                                        <items>
+                                            <navigationItem id="FSq-Xp-MXD">
+                                                <barButtonItem key="leftBarButtonItem" enabled="NO" systemItem="action" id="mjB-iG-h07">
+                                                    <connections>
+                                                        <action selector="shareMeme:" destination="BYZ-38-t0r" id="8sA-LC-pgM"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                                <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="Fop-rI-6ai">
+                                                    <connections>
+                                                        <action selector="cancelMeme:" destination="BYZ-38-t0r" id="VfC-if-fRX"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                            </navigationItem>
+                                        </items>
+                                    </navigationBar>
                                     <view contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="pMa-Bv-bbK">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="597"/>
                                         <subviews>
@@ -35,7 +52,7 @@
                                                 <rect key="frame" x="0.0" y="8" width="375" height="17"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                                             </textField>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="BOTTOM" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="89Y-OO-ZZD">
                                                 <rect key="frame" x="0.0" y="572" width="375" height="17"/>
@@ -46,11 +63,11 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="4YW-b8-gZW" firstAttribute="leading" secondItem="pMa-Bv-bbK" secondAttribute="leading" id="Bma-ng-a9j"/>
+                                            <constraint firstItem="4YW-b8-gZW" firstAttribute="leading" relation="lessThanOrEqual" secondItem="pMa-Bv-bbK" secondAttribute="leading" id="Bma-ng-a9j"/>
                                             <constraint firstAttribute="bottom" secondItem="4YW-b8-gZW" secondAttribute="bottom" id="DoG-Kj-j4i"/>
                                             <constraint firstItem="4YW-b8-gZW" firstAttribute="centerX" secondItem="pMa-Bv-bbK" secondAttribute="centerX" id="Ntj-Kj-6tV"/>
                                             <constraint firstItem="89Y-OO-ZZD" firstAttribute="centerX" secondItem="4YW-b8-gZW" secondAttribute="centerX" id="RIa-QK-P9X"/>
-                                            <constraint firstAttribute="trailing" secondItem="4YW-b8-gZW" secondAttribute="trailing" id="gfi-qq-dTL"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="4YW-b8-gZW" secondAttribute="trailing" id="gfi-qq-dTL"/>
                                             <constraint firstItem="89Y-OO-ZZD" firstAttribute="bottom" secondItem="4YW-b8-gZW" secondAttribute="bottom" constant="-8" id="lzC-LK-U9e"/>
                                             <constraint firstItem="4YW-b8-gZW" firstAttribute="centerY" secondItem="pMa-Bv-bbK" secondAttribute="centerY" id="msJ-IZ-30Q"/>
                                             <constraint firstItem="89Y-OO-ZZD" firstAttribute="width" secondItem="4YW-b8-gZW" secondAttribute="width" id="n0d-Xd-RaJ"/>
@@ -62,16 +79,19 @@
                                     <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ep5-8K-zvt">
                                         <rect key="frame" x="0.0" y="597" width="375" height="42"/>
                                         <items>
-                                            <barButtonItem title="Camera" style="plain" id="q78-G8-K8h">
+                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="g9z-dP-dbi"/>
+                                            <barButtonItem style="plain" systemItem="camera" id="q78-G8-K8h">
                                                 <connections>
                                                     <action selector="takeMemePhoto:" destination="BYZ-38-t0r" id="gCR-Qf-HxU"/>
                                                 </connections>
                                             </barButtonItem>
+                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="g0I-ul-mnB"/>
                                             <barButtonItem title="Pick Image" id="byl-hQ-w5l">
                                                 <connections>
                                                     <action selector="pickMemeImage:" destination="BYZ-38-t0r" id="N7v-Af-dQc"/>
                                                 </connections>
                                             </barButtonItem>
+                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="3gq-NE-4MY"/>
                                         </items>
                                     </toolbar>
                                 </subviews>
@@ -87,7 +107,11 @@
                     </view>
                     <connections>
                         <outlet property="bottomTextField" destination="89Y-OO-ZZD" id="tRi-zy-FSR"/>
+                        <outlet property="cameraButton" destination="q78-G8-K8h" id="bR9-nD-uvC"/>
+                        <outlet property="cancelButton" destination="Fop-rI-6ai" id="gwa-H2-ct1"/>
                         <outlet property="memeImageView" destination="4YW-b8-gZW" id="5DH-vr-33y"/>
+                        <outlet property="memeView" destination="pMa-Bv-bbK" id="HsX-QS-0cf"/>
+                        <outlet property="shareButton" destination="mjB-iG-h07" id="6R1-1c-T9f"/>
                         <outlet property="topTextField" destination="kj0-cL-CGf" id="xXV-s6-lVH"/>
                     </connections>
                 </viewController>

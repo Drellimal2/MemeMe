@@ -13,26 +13,43 @@ class MainViewController: UIViewController {
     @IBOutlet weak var memeImageView: UIImageView!
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var topTextField: UITextField!
+    @IBOutlet weak var memeView: UIView!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
+    @IBOutlet weak var shareButton: UIBarButtonItem!
+    @IBOutlet weak var cameraButton: UIBarButtonItem!
     
     let memeTextFieldDelegate = MemeTextFieldDelegate()
     
     let memeTextAttributes:[String:Any] = [
-        NSStrokeColorAttributeName : UIColor(red: 0.0, green: 0.0, blue:0.0, alpha:1.0),
-        NSForegroundColorAttributeName : UIColor(red: 1.0, green: 1.0, blue:1.0, alpha:1.0),
+        NSStrokeColorAttributeName : UIColor(red: 0.0, green: 0.0, blue:0.0, alpha: 1.0),
+        NSForegroundColorAttributeName : UIColor.blue,
         NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
         NSStrokeWidthAttributeName : 4.0,
     ]
     
+    @IBAction func cancelMeme(_ sender: Any) {
+        memeImageView.image = nil
+        shareButton.isEnabled = false
+    }
+    @IBAction func shareMeme(_ sender: Any) {
+        
+        
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         topTextField.delegate = memeTextFieldDelegate
         topTextField.defaultTextAttributes = memeTextAttributes
         topTextField.textAlignment = .center
+        topTextField.textColor = .white
         
         bottomTextField.delegate = memeTextFieldDelegate
         bottomTextField.defaultTextAttributes = memeTextAttributes
         bottomTextField.textAlignment = .center
+        bottomTextField.textColor = .white
+        
+        cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+
         
         
     }
@@ -53,6 +70,15 @@ class MainViewController: UIViewController {
 
     }
     
+    func generateMemedImage() -> UIImage {
+        
+        UIGraphicsBeginImageContext(memeView.frame.size)
+        view.drawHierarchy(in: memeView.frame, afterScreenUpdates: true)
+        let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        
+        return memedImage
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         
@@ -81,7 +107,9 @@ class MainViewController: UIViewController {
     }
     
     func keyboardWillShow(_ notification:Notification) {
-        
+        if topTextField.isEditing || topTextField.isFocused {
+            return
+        }
         view.frame.origin.y -= getKeyboardHeight(notification)
         
     }
@@ -107,6 +135,7 @@ extension MainViewController : UIImagePickerControllerDelegate, UINavigationCont
     func imagePickerController(_ controller : UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
         if let image = info["UIImagePickerControllerOriginalImage"] as! UIImage! {
             memeImageView.image = image
+            shareButton.isEnabled = true
         }
         controller.dismiss(animated: true, completion: nil)
     }

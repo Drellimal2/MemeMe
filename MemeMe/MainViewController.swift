@@ -17,22 +17,37 @@ class MainViewController: UIViewController {
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
-    
     let memeTextFieldDelegate = MemeTextFieldDelegate()
     
     let memeTextAttributes:[String:Any] = [
         NSStrokeColorAttributeName : UIColor(red: 0.0, green: 0.0, blue:0.0, alpha: 1.0),
-        NSForegroundColorAttributeName : UIColor.blue,
+        NSForegroundColorAttributeName : UIColor.white,
         NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-        NSStrokeWidthAttributeName : 4.0,
+        NSStrokeWidthAttributeName : -4.0,
     ]
     
     @IBAction func cancelMeme(_ sender: Any) {
         memeImageView.image = nil
         shareButton.isEnabled = false
+        topTextField.text = "TOP"
+        bottomTextField.text = "BOTTOM"
+        memeView.backgroundColor = .clear
     }
     @IBAction func shareMeme(_ sender: Any) {
+        let memedImage = generateMemedImage()
         
+        let imageToShare = [ memedImage ]
+        
+        let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+        
+        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+        
+        
+        // present the view controller
+        self.present(activityViewController, animated: true, completion: { () -> Void in
+            self.saveMeme(memedImage: memedImage)
+//            activityViewController.dismiss(animated: true, completion: nil)
+        })
         
     }
 
@@ -41,17 +56,20 @@ class MainViewController: UIViewController {
         topTextField.delegate = memeTextFieldDelegate
         topTextField.defaultTextAttributes = memeTextAttributes
         topTextField.textAlignment = .center
-        topTextField.textColor = .white
         
         bottomTextField.delegate = memeTextFieldDelegate
         bottomTextField.defaultTextAttributes = memeTextAttributes
         bottomTextField.textAlignment = .center
-        bottomTextField.textColor = .white
         
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
 
         
         
+    }
+    
+    func saveMeme(memedImage : UIImage){
+        let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, image: memeImageView.image!, memeImage: memedImage)
+        print(meme)
     }
     
     @IBAction func takeMemePhoto(_ sender: Any) {
@@ -136,6 +154,7 @@ extension MainViewController : UIImagePickerControllerDelegate, UINavigationCont
         if let image = info["UIImagePickerControllerOriginalImage"] as! UIImage! {
             memeImageView.image = image
             shareButton.isEnabled = true
+            memeView.backgroundColor = .black
         }
         controller.dismiss(animated: true, completion: nil)
     }

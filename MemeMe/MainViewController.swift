@@ -46,7 +46,6 @@ class MainViewController: UIViewController {
         activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
         activityViewController.completionWithItemsHandler = {(activity, completed, items, error) in
             self.saveMeme(memedImage: memedImage)
-            activityViewController.dismiss(animated: true, completion: nil)
         }
 
         

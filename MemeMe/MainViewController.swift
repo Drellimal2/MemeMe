@@ -19,10 +19,13 @@ class MainViewController: UIViewController {
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     let memeTextFieldDelegate = MemeTextFieldDelegate()
     
+    let CAMERA_TAG = 0
+    let GALLERY_TAG = 1
+    
     let memeTextAttributes:[String:Any] = [
         NSStrokeColorAttributeName : UIColor(red: 0.0, green: 0.0, blue:0.0, alpha: 1.0),
         NSForegroundColorAttributeName : UIColor.white,
-        NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+        NSFontAttributeName : UIFont(name: "Impact", size: 40)!,
         NSStrokeWidthAttributeName : -4.0,
     ]
     
@@ -41,52 +44,59 @@ class MainViewController: UIViewController {
         let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
         
         activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
-        
+        activityViewController.completionWithItemsHandler = {(activity, completed, items, error) in
+            self.saveMeme(memedImage: memedImage)
+            activityViewController.dismiss(animated: true, completion: nil)
+        }
+
         
         // present the view controller
-        self.present(activityViewController, animated: true, completion: { () -> Void in
-            self.saveMeme(memedImage: memedImage)
-//            activityViewController.dismiss(animated: true, completion: nil)
-        })
+        self.present(activityViewController, animated: true, completion: nil)
+        
+        
         
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        topTextField.delegate = memeTextFieldDelegate
-        topTextField.defaultTextAttributes = memeTextAttributes
-        topTextField.textAlignment = .center
-        
-        bottomTextField.delegate = memeTextFieldDelegate
-        bottomTextField.defaultTextAttributes = memeTextAttributes
-        bottomTextField.textAlignment = .center
-        
+        prepareTextField(textField: topTextField, defaultText:"TOP")
+        prepareTextField(textField: bottomTextField, defaultText:"BOTTOM")
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
-
-        
         
     }
+    
+    func prepareTextField(textField: UITextField, defaultText: String) {
+        textField.delegate = memeTextFieldDelegate
+        textField.defaultTextAttributes = memeTextAttributes
+        textField.textAlignment = .center
+        textField.text = defaultText
+    }
+    
+    
     
     func saveMeme(memedImage : UIImage){
         let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, image: memeImageView.image!, memeImage: memedImage)
         print(meme)
     }
     
-    @IBAction func takeMemePhoto(_ sender: Any) {
+        
+    @IBAction func pickImage(_ sender: Any) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        imagePicker.sourceType = .camera
+        switch (sender as! UIBarButtonItem).tag {
+            case CAMERA_TAG:
+                imagePicker.sourceType = .camera
+                break
+            case GALLERY_TAG:
+                imagePicker.sourceType = .photoLibrary
+                break
+            default:
+                break
+        }
         present(imagePicker, animated: false, completion: nil)
-
+        
     }
     
-    @IBAction func pickMemeImage(_ sender: Any) {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        present(imagePicker, animated: false, completion: nil)
-
-    }
     
     func generateMemedImage() -> UIImage {
         
@@ -128,7 +138,7 @@ class MainViewController: UIViewController {
         if topTextField.isEditing || topTextField.isFocused {
             return
         }
-        view.frame.origin.y -= getKeyboardHeight(notification)
+        view.frame.origin.y = -getKeyboardHeight(notification)
         
     }
     

@@ -12,9 +12,14 @@ import UIKit
 // MARK: - EmojiTextFieldDelegate : NSObject, UITextFieldDelegate
 
 class MemeTextFieldDelegate : NSObject, UITextFieldDelegate {
+    let TOP_TAG = 0
+    let BOTTOM_TAG = 1
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.text = ""
+        if (textField.tag == TOP_TAG && textField.text == "TOP") ||
+            (textField.tag == BOTTOM_TAG && textField.text == "BOTTOM"){
+            textField.text = ""
+        }
         
     }
     

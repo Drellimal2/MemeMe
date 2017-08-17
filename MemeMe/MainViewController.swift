@@ -10,6 +10,7 @@ import UIKit
 
 class MainViewController: UIViewController {
 
+    @IBOutlet weak var navBar: UINavigationBar!
     @IBOutlet weak var memeImageView: UIImageView!
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var topTextField: UITextField!
@@ -30,11 +31,12 @@ class MainViewController: UIViewController {
     ]
     
     @IBAction func cancelMeme(_ sender: Any) {
-        memeImageView.image = nil
-        shareButton.isEnabled = false
-        topTextField.text = "TOP"
-        bottomTextField.text = "BOTTOM"
-        memeView.backgroundColor = .clear
+//        memeImageView.image = nil
+//        shareButton.isEnabled = false
+//        topTextField.text = "TOP"
+//        bottomTextField.text = "BOTTOM"
+//        memeView.backgroundColor = .clear
+        self.dismiss(animated: true, completion: nil)
     }
     @IBAction func shareMeme(_ sender: Any) {
         let memedImage = generateMemedImage()
@@ -75,7 +77,12 @@ class MainViewController: UIViewController {
     
     func saveMeme(memedImage : UIImage){
         let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, image: memeImageView.image!, memeImage: memedImage)
-        print(meme)
+        let object = UIApplication.shared.delegate
+        let appDelegate = object as! AppDelegate
+        appDelegate.memes.append(meme)
+        print(appDelegate.memes.count)
+        self.dismiss(animated: true, completion: nil)
+        
     }
     
         
@@ -98,12 +105,12 @@ class MainViewController: UIViewController {
     
     
     func generateMemedImage() -> UIImage {
-        
+        navBar.isHidden = true
         UIGraphicsBeginImageContext(memeView.frame.size)
         view.drawHierarchy(in: memeView.frame, afterScreenUpdates: true)
         let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
-        
+        navBar.isHidden = false
         return memedImage
     }
     

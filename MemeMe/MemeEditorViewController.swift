@@ -61,8 +61,12 @@ class MemeEditorViewController: UIViewController {
         prepareTextField(textField: topTextField, defaultText:"TOP")
         prepareTextField(textField: bottomTextField, defaultText:"BOTTOM")
         print(editMeme)
-//        guard let memeImageView.image  = editMeme.image, let topTextView.text = editMeme.topText,
-//            bottomTextField.
+        if editMeme != nil{
+            memeImageView.image  = editMeme.image
+            topTextField.text = editMeme.topText
+            bottomTextField.text = editMeme.bottomText
+        }
+
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         
     }
@@ -93,7 +97,6 @@ class MemeEditorViewController: UIViewController {
         switch (sender as! UIBarButtonItem).tag {
             case cameraTag:
                 imagePicker.sourceType = .camera
-                imagePicker.showsCameraControls = true
                 break
             case galleryTag:
                 imagePicker.sourceType = .photoLibrary
@@ -111,7 +114,7 @@ class MemeEditorViewController: UIViewController {
         let snapView = self.memeView.snapshotView(afterScreenUpdates: true)! // Added this method to get only the view without the padding at the top or the toolbar or navigation bar
 
         UIGraphicsBeginImageContext(snapView.frame.size)
-        snapView.drawHierarchy(in: snapView.frame, afterScreenUpdates: true)
+        view.drawHierarchy(in: snapView.frame, afterScreenUpdates: true)
         let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         return memedImage

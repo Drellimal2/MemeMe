@@ -15,8 +15,6 @@ class MemeDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.image = meme.memeImage
-        // Do any additional setup after loading the view.
-        self.tabBarController?.tabBar.isHidden = true
     }
 
     

@@ -12,6 +12,7 @@ class MemeCollectionViewController: UIViewController {
 
     @IBOutlet weak var flowLayout : UICollectionViewFlowLayout!
     @IBOutlet weak var sentMemesCollectionView: UICollectionView!
+    let memeDetailsSegueIdentifier = "memeDetails"
     
     var memes = [Meme]()
 
@@ -33,6 +34,7 @@ class MemeCollectionViewController: UIViewController {
         
     }
     
+    
 
 }
 
@@ -47,6 +49,12 @@ extension MemeCollectionViewController : UICollectionViewDelegate, UICollectionV
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MemeCollectionCell", for: indexPath) as! SentMemeCollectionViewCell
         cell.memeImage.image = meme.memeImage
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "MemeDetailViewController") as! MemeDetailViewController
+        vc.meme = self.memes[(indexPath as NSIndexPath).row]
+        navigationController?.pushViewController(vc, animated: true)
     }
     
 }

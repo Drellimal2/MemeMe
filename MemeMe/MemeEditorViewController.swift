@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+class MemeEditorViewController: UIViewController {
 
     @IBOutlet weak var navBar: UINavigationBar!
     @IBOutlet weak var memeImageView: UIImageView!
@@ -20,8 +20,10 @@ class MainViewController: UIViewController {
     @IBOutlet weak var cameraButton: UIBarButtonItem!
     let memeTextFieldDelegate = MemeTextFieldDelegate()
     
-    let CAMERA_TAG = 0
-    let GALLERY_TAG = 1
+    var editMeme : Meme!
+    
+    let cameraTag = 0
+    let galleryTag = 1
     
     let memeTextAttributes:[String:Any] = [
         NSStrokeColorAttributeName : UIColor(red: 0.0, green: 0.0, blue:0.0, alpha: 1.0),
@@ -31,13 +33,9 @@ class MainViewController: UIViewController {
     ]
     
     @IBAction func cancelMeme(_ sender: Any) {
-//        memeImageView.image = nil
-//        shareButton.isEnabled = false
-//        topTextField.text = "TOP"
-//        bottomTextField.text = "BOTTOM"
-//        memeView.backgroundColor = .clear
         self.dismiss(animated: true, completion: nil)
     }
+    
     @IBAction func shareMeme(_ sender: Any) {
         let memedImage = generateMemedImage()
         
@@ -62,6 +60,9 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         prepareTextField(textField: topTextField, defaultText:"TOP")
         prepareTextField(textField: bottomTextField, defaultText:"BOTTOM")
+        print(editMeme)
+//        guard let memeImageView.image  = editMeme.image, let topTextView.text = editMeme.topText,
+//            bottomTextField.
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         
     }
@@ -90,27 +91,29 @@ class MainViewController: UIViewController {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         switch (sender as! UIBarButtonItem).tag {
-            case CAMERA_TAG:
+            case cameraTag:
                 imagePicker.sourceType = .camera
+                imagePicker.showsCameraControls = true
                 break
-            case GALLERY_TAG:
+            case galleryTag:
                 imagePicker.sourceType = .photoLibrary
                 break
             default:
                 break
         }
+        imagePicker.allowsEditing = false // It was set to true to enable cropping however the cropping rect is always a square and I was not able to find a solution to change it.
         present(imagePicker, animated: false, completion: nil)
         
     }
     
     
     func generateMemedImage() -> UIImage {
-        navBar.isHidden = true
-        UIGraphicsBeginImageContext(memeView.frame.size)
-        view.drawHierarchy(in: memeView.frame, afterScreenUpdates: true)
+        let snapView = self.memeView.snapshotView(afterScreenUpdates: true)! // Added this method to get only the view without the padding at the top or the toolbar or navigation bar
+
+        UIGraphicsBeginImageContext(snapView.frame.size)
+        snapView.drawHierarchy(in: snapView.frame, afterScreenUpdates: true)
         let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
-        navBar.isHidden = false
         return memedImage
     }
     
@@ -163,10 +166,13 @@ class MainViewController: UIViewController {
 
 }
 
-extension MainViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension MemeEditorViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     
     func imagePickerController(_ controller : UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
+        /*
+             Would use UIImagePickerControllerEditedImage to get the cropped image if editing was enabled.
+         */
         if let image = info["UIImagePickerControllerOriginalImage"] as! UIImage! {
             memeImageView.image = image
             shareButton.isEnabled = true

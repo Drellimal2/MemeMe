@@ -11,6 +11,7 @@ import UIKit
 class MemeEditorViewController: UIViewController {
 
     @IBOutlet weak var navBar: UINavigationBar!
+    @IBOutlet weak var toolbar: UIToolbar!
     @IBOutlet weak var memeImageView: UIImageView!
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var topTextField: UITextField!
@@ -44,10 +45,13 @@ class MemeEditorViewController: UIViewController {
         let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
         
         activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+        
+        
         activityViewController.completionWithItemsHandler = {(activity, completed, items, error) in
             self.saveMeme(memedImage: memedImage)
         }
 
+        
         
         // present the view controller
         self.present(activityViewController, animated: true, completion: nil)
@@ -65,6 +69,9 @@ class MemeEditorViewController: UIViewController {
             memeImageView.image  = editMeme.image
             topTextField.text = editMeme.topText
             bottomTextField.text = editMeme.bottomText
+            shareButton.isEnabled = true
+            navBar.isHidden = false
+            toolbar.isHidden = true // If we are going to change the image it might as well be a new meme. So the toolbar is hidden when editing a meme.
         }
 
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
@@ -111,13 +118,38 @@ class MemeEditorViewController: UIViewController {
     
     
     func generateMemedImage() -> UIImage {
-        let snapView = self.memeView.snapshotView(afterScreenUpdates: true)! // Added this method to get only the view without the padding at the top or the toolbar or navigation bar
-
-        UIGraphicsBeginImageContext(snapView.frame.size)
-        view.drawHierarchy(in: snapView.frame, afterScreenUpdates: true)
+        
+        hideBars()
+        
+        UIGraphicsBeginImageContext(self.view.frame.size)
+        
+        view.drawHierarchy(in: memeView.frame, afterScreenUpdates: true)
+        
         let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        
         UIGraphicsEndImageContext()
+        
+        showBars()
         return memedImage
+    }
+    
+    /*
+        This is used to prepare the UI for the generation of the meme Image.
+        It hides the navbar and toolbar as well as changes the background view color to match the meme view color.
+     */
+    func hideBars(){
+        self.toolbar.isHidden = true
+        self.navBar.isHidden = true
+        self.view.backgroundColor = self.memeView.backgroundColor
+    }
+    
+    /*
+     This is used to revert changes to the UI after the generation of the meme Image.
+     */
+    func showBars(){
+        self.toolbar.isHidden = false
+        self.navBar.isHidden = false
+        self.view.backgroundColor = .white
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -179,7 +211,6 @@ extension MemeEditorViewController : UIImagePickerControllerDelegate, UINavigati
         if let image = info["UIImagePickerControllerOriginalImage"] as! UIImage! {
             memeImageView.image = image
             shareButton.isEnabled = true
-            memeView.backgroundColor = .black
         }
         controller.dismiss(animated: true, completion: nil)
     }

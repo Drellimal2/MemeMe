@@ -48,7 +48,9 @@ class MemeEditorViewController: UIViewController {
         
         
         activityViewController.completionWithItemsHandler = {(activity, completed, items, error) in
-            self.saveMeme(memedImage: memedImage)
+            if completed{
+                self.saveMeme(memedImage: memedImage)
+            }
         }
 
         
@@ -64,14 +66,15 @@ class MemeEditorViewController: UIViewController {
         super.viewDidLoad()
         prepareTextField(textField: topTextField, defaultText:"TOP")
         prepareTextField(textField: bottomTextField, defaultText:"BOTTOM")
-        print(editMeme)
+        configureBars(isGenerating : false)
+
         if editMeme != nil{
-            memeImageView.image  = editMeme.image
+            memeImageView.image = editMeme.image
             topTextField.text = editMeme.topText
             bottomTextField.text = editMeme.bottomText
             shareButton.isEnabled = true
-            navBar.isHidden = false
             toolbar.isHidden = true // If we are going to change the image it might as well be a new meme. So the toolbar is hidden when editing a meme.
+            
         }
 
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
@@ -119,43 +122,38 @@ class MemeEditorViewController: UIViewController {
     
     func generateMemedImage() -> UIImage {
         
-        hideBars()
-        
+        configureBars(isGenerating : true)
         UIGraphicsBeginImageContext(self.view.frame.size)
         
         view.drawHierarchy(in: memeView.frame, afterScreenUpdates: true)
         
         let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         
+        configureBars(isGenerating : false)
+
         UIGraphicsEndImageContext()
         
-        showBars()
         return memedImage
     }
     
     /*
         This is used to prepare the UI for the generation of the meme Image.
         It hides the navbar and toolbar as well as changes the background view color to match the meme view color.
+          This is also used to revert changes to the UI after the generation of the meme Image.
      */
-    func hideBars(){
-        self.toolbar.isHidden = true
-        self.navBar.isHidden = true
-        self.view.backgroundColor = self.memeView.backgroundColor
-    }
-    
-    /*
-     This is used to revert changes to the UI after the generation of the meme Image.
-     */
-    func showBars(){
-        self.toolbar.isHidden = false
-        self.navBar.isHidden = false
-        self.view.backgroundColor = .white
+    func configureBars(isGenerating : Bool){
+        
+        self.toolbar.isHidden = isGenerating
+        self.navBar.isHidden = isGenerating
+        self.view.backgroundColor = isGenerating ? self.memeView.backgroundColor  : .white
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
         subscribeToKeyboardNotifications()
+        
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {

@@ -30,7 +30,7 @@ class MemeTableViewController: UIViewController {
         print(sentMemeTableView.isEditing ? "Done" : "Edit")
 
     }
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         isEditingAllMemes = false
         updateData()
     }

@@ -310,7 +310,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="EKf-B1-NrO">
+                            <stackView opaque="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="EKf-B1-NrO">
                                 <rect key="frame" x="4" y="28" width="406" height="708"/>
                                 <subviews>
                                     <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vh6-BF-Qj4">
@@ -330,10 +330,10 @@
                                             </navigationItem>
                                         </items>
                                     </navigationBar>
-                                    <view contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="pMa-Bv-bbK">
+                                    <view contentMode="scaleAspectFit" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="pMa-Bv-bbK">
                                         <rect key="frame" x="0.0" y="48" width="406" height="612"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="249" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="4YW-b8-gZW">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="4YW-b8-gZW">
                                                 <rect key="frame" x="0.0" y="0.0" width="406" height="612"/>
                                             </imageView>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="topText" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="TOP" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kj0-cL-CGf">
@@ -356,13 +356,13 @@
                                             <constraint firstItem="4YW-b8-gZW" firstAttribute="centerX" secondItem="pMa-Bv-bbK" secondAttribute="centerX" id="Ntj-Kj-6tV"/>
                                             <constraint firstItem="89Y-OO-ZZD" firstAttribute="centerX" secondItem="4YW-b8-gZW" secondAttribute="centerX" id="RIa-QK-P9X"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="4YW-b8-gZW" secondAttribute="trailing" id="gfi-qq-dTL"/>
+                                            <constraint firstItem="4YW-b8-gZW" firstAttribute="height" secondItem="pMa-Bv-bbK" secondAttribute="height" id="iPf-iu-1t9"/>
                                             <constraint firstItem="89Y-OO-ZZD" firstAttribute="bottom" secondItem="4YW-b8-gZW" secondAttribute="bottom" constant="-8" id="lzC-LK-U9e"/>
                                             <constraint firstItem="4YW-b8-gZW" firstAttribute="centerY" secondItem="pMa-Bv-bbK" secondAttribute="centerY" id="msJ-IZ-30Q"/>
                                             <constraint firstItem="89Y-OO-ZZD" firstAttribute="width" secondItem="4YW-b8-gZW" secondAttribute="width" id="n0d-Xd-RaJ"/>
                                             <constraint firstItem="kj0-cL-CGf" firstAttribute="centerX" secondItem="4YW-b8-gZW" secondAttribute="centerX" id="nDB-yD-lCE"/>
                                             <constraint firstItem="kj0-cL-CGf" firstAttribute="top" secondItem="4YW-b8-gZW" secondAttribute="top" constant="8" id="oLc-wH-kVr"/>
                                             <constraint firstItem="kj0-cL-CGf" firstAttribute="width" secondItem="4YW-b8-gZW" secondAttribute="width" id="pqe-Q0-FBZ"/>
-                                            <constraint firstItem="4YW-b8-gZW" firstAttribute="top" secondItem="pMa-Bv-bbK" secondAttribute="top" id="qr3-hP-AtB"/>
                                         </constraints>
                                     </view>
                                     <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ep5-8K-zvt">
@@ -394,7 +394,6 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="EKf-B1-NrO" secondAttribute="bottom" id="vt2-kY-Jii"/>
                         </constraints>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
                     <connections>
                         <outlet property="bottomTextField" destination="89Y-OO-ZZD" id="tRi-zy-FSR"/>
                         <outlet property="cameraButton" destination="q78-G8-K8h" id="bR9-nD-uvC"/>
@@ -418,6 +417,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="sdW-3r-364"/>
-        <segue reference="MVZ-P7-1YR"/>
+        <segue reference="tMx-q8-ans"/>
     </inferredMetricsTieBreakers>
 </document>
